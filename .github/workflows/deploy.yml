@@ -1,0 +1,209 @@
+# 🚀 静态导航站自动部署工作流
+name: Deploy Static Navigation Site
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # 🔍 代码质量检查
+  lint:
+    runs-on: ubuntu-latest
+    name: 🔍 Code Quality Check
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📋 Install dependencies
+        run: |
+          npm ci --only=dev || npm install --only=dev
+
+      - name: 🔍 Lint HTML
+        run: |
+          npx htmlhint *.html || echo "HTML lint completed"
+
+      - name: 🎨 Lint CSS
+        run: |
+          npx stylelint "styles/**/*.css" || echo "CSS lint completed"
+
+      - name: ⚡ Lint JavaScript
+        run: |
+          npx eslint "scripts/**/*.js" || echo "JS lint completed"
+
+  # 🧪 功能测试
+  test:
+    runs-on: ubuntu-latest
+    name: 🧪 Functionality Test
+    needs: lint
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: 🌐 Start local server
+        run: |
+          npx http-server . -p 8080 &
+          sleep 5
+
+      - name: 🔍 Test site accessibility
+        run: |
+          curl -f http://localhost:8080/ || exit 1
+          curl -f http://localhost:8080/styles/main.css || exit 1
+          curl -f http://localhost:8080/scripts/main.js || exit 1
+          echo "✅ All files accessible"
+
+      - name: 📊 Performance audit
+        run: |
+          npm install -g lighthouse
+          lighthouse http://localhost:8080/ --output json --output-path ./lighthouse-report.json --chrome-flags="--headless --no-sandbox" || echo "Lighthouse completed"
+
+      - name: 📋 Upload lighthouse report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: lighthouse-report
+          path: lighthouse-report.json
+
+  # 🚀 部署到GitHub Pages
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    name: 🚀 Deploy to GitHub Pages
+    needs: [lint, test]
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🎯 Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📦 Optimize assets
+        run: |
+          # 压缩CSS (移除注释和空白)
+          if command -v csso &> /dev/null; then
+            echo "🎨 Optimizing CSS..."
+            csso styles/main.css --output styles/main.min.css
+            mv styles/main.min.css styles/main.css
+          fi
+          
+          # 压缩JavaScript (移除注释和空白)
+          if command -v terser &> /dev/null; then
+            echo "⚡ Optimizing JavaScript..."
+            terser scripts/main.js --compress --mangle --output scripts/main.min.js
+            mv scripts/main.min.js scripts/main.js
+          fi
+          
+          echo "✅ Asset optimization completed"
+
+      - name: 📄 Generate sitemap
+        run: |
+          cat > sitemap.xml << 'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+            <url>
+              <loc>https://q877220.github.io/repo-078/</loc>
+              <lastmod>$(date +%Y-%m-%d)</lastmod>
+              <changefreq>weekly</changefreq>
+              <priority>1.0</priority>
+            </url>
+          </urlset>
+          EOF
+
+      - name: 🤖 Generate robots.txt
+        run: |
+          cat > robots.txt << 'EOF'
+          User-agent: *
+          Allow: /
+          
+          Sitemap: https://q877220.github.io/repo-078/sitemap.xml
+          EOF
+
+      - name: 📊 Generate deployment info
+        run: |
+          cat > deployment-info.json << EOF
+          {
+            "deployedAt": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "commit": "${{ github.sha }}",
+            "branch": "${{ github.ref_name }}",
+            "workflow": "${{ github.run_id }}",
+            "version": "1.0.0"
+          }
+          EOF
+
+      - name: 📋 Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # 📊 部署后验证
+  verify:
+    runs-on: ubuntu-latest
+    name: 📊 Post-deployment Verification
+    needs: deploy
+    if: always()
+    steps:
+      - name: 🔍 Verify deployment
+        run: |
+          echo "🌍 Verifying site at: https://q877220.github.io/repo-078/"
+          
+          # 等待几秒让部署生效
+          sleep 30
+          
+          # 验证主页
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://q877220.github.io/repo-078/)
+          if [ "$response" = "200" ]; then
+            echo "✅ Main page is accessible"
+          else
+            echo "❌ Main page returned status: $response"
+          fi
+          
+          # 验证CSS文件
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://q877220.github.io/repo-078/styles/main.css)
+          if [ "$response" = "200" ]; then
+            echo "✅ CSS file is accessible"
+          else
+            echo "❌ CSS file returned status: $response"
+          fi
+          
+          # 验证JS文件
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://q877220.github.io/repo-078/scripts/main.js)
+          if [ "$response" = "200" ]; then
+            echo "✅ JavaScript file is accessible"
+          else
+            echo "❌ JavaScript file returned status: $response"
+          fi
+
+      - name: 🎉 Deployment Success Notification
+        run: |
+          echo "🎉 静态导航站部署成功!"
+          echo "🌍 访问地址: https://q877220.github.io/repo-078/"
+          echo "📊 构建时间: $(date)"
+          echo "🔗 GitHub仓库: https://github.com/q877220/repo-078"

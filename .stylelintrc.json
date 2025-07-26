@@ -1,0 +1,19 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "color-hex-case": "lower",
+    "color-hex-length": "short",
+    "comment-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "function-name-case": "lower",
+    "function-url-quotes": "always",
+    "length-zero-no-unit": true,
+    "property-case": "lower",
+    "rule-empty-line-before": null,
+    "selector-pseudo-element-case": "lower",
+    "selector-pseudo-class-case": "lower",
+    "selector-type-case": "lower",
+    "unit-case": "lower",
+    "value-keyword-case": "lower"
+  }
+}
