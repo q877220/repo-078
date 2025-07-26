@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航站 | Navigation Hub</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="assets/favicon.svg">
+    <link rel="mask-icon" href="assets/favicon.svg" color="#6366f1">
+    <meta name="description" content="高效导航站 - 一站式网址收藏与管理平台">
+    <meta name="keywords" content="导航站,网址导航,书签管理,快速访问">
+</head>
+<body>
+    <!-- 🎯 顶部导航栏 -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>🚀 导航站</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#home" class="nav-link active">首页</a></li>
+                    <li><a href="#tools" class="nav-link">工具</a></li>
+                    <li><a href="#dev" class="nav-link">开发</a></li>
+                    <li><a href="#ai" class="nav-link">AI</a></li>
+                    <li><a href="#social" class="nav-link">社交</a></li>
+                </ul>
+            </nav>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索网站..." autocomplete="off">
+                <button id="searchBtn">🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 🎨 主要内容区域 -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section id="home" class="hero">
+                <h2>高效导航，一键直达</h2>
+                <p>精选优质网站，提升你的工作效率</p>
+            </section>
+
+            <!-- 🛠️ 常用工具 -->
+            <section id="tools" class="category">
+                <h3>🛠️ 常用工具</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">📧</div>
+                        <h4>Gmail</h4>
+                        <p>谷歌邮箱服务</p>
+                        <a href="https://gmail.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">☁️</div>
+                        <h4>Google Drive</h4>
+                        <p>云端存储同步</p>
+                        <a href="https://drive.google.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📋</div>
+                        <h4>Notion</h4>
+                        <p>全能笔记管理</p>
+                        <a href="https://notion.so" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🎨</div>
+                        <h4>Figma</h4>
+                        <p>协作设计工具</p>
+                        <a href="https://figma.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 💻 开发工具 -->
+            <section id="dev" class="category">
+                <h3>💻 开发工具</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">🐙</div>
+                        <h4>GitHub</h4>
+                        <p>代码托管平台</p>
+                        <a href="https://github.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📝</div>
+                        <h4>VS Code</h4>
+                        <p>微软代码编辑器</p>
+                        <a href="https://code.visualstudio.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🌐</div>
+                        <h4>Stack Overflow</h4>
+                        <p>程序员问答社区</p>
+                        <a href="https://stackoverflow.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🐳</div>
+                        <h4>Docker Hub</h4>
+                        <p>容器镜像仓库</p>
+                        <a href="https://hub.docker.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🤖 AI 工具 -->
+            <section id="ai" class="category">
+                <h3>🤖 AI 工具</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">💬</div>
+                        <h4>ChatGPT</h4>
+                        <p>OpenAI 聊天机器人</p>
+                        <a href="https://chat.openai.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🎭</div>
+                        <h4>Claude</h4>
+                        <p>Anthropic AI 助手</p>
+                        <a href="https://claude.ai" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🎨</div>
+                        <h4>Midjourney</h4>
+                        <p>AI 图像生成</p>
+                        <a href="https://midjourney.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">⚡</div>
+                        <h4>Copilot</h4>
+                        <p>GitHub AI 编程助手</p>
+                        <a href="https://copilot.github.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 📱 社交媒体 -->
+            <section id="social" class="category">
+                <h3>📱 社交媒体</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">🐦</div>
+                        <h4>Twitter</h4>
+                        <p>社交媒体平台</p>
+                        <a href="https://twitter.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💼</div>
+                        <h4>LinkedIn</h4>
+                        <p>职业社交网络</p>
+                        <a href="https://linkedin.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📺</div>
+                        <h4>YouTube</h4>
+                        <p>视频分享平台</p>
+                        <a href="https://youtube.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💬</div>
+                        <h4>Discord</h4>
+                        <p>游戏社交平台</p>
+                        <a href="https://discord.com" target="_blank" class="card-link">访问</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 🔧 底部信息 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 导航站. 专为效率而生 | <a href="#" class="footer-link">关于我们</a> | <a href="#" class="footer-link">联系方式</a></p>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{
+  "name": "static-navigation-hub",
+  "version": "1.0.0",
+  "description": "🚀 企业级静态导航站 - 高效、现代、响应式",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 3000",
+    "build": "echo 'No build process needed for static site'",
+    "deploy:github": "git add . && git commit -m 'Deploy to GitHub Pages' && git push origin main",
+    "deploy:netlify": "netlify deploy --prod --dir .",
+    "deploy:vercel": "vercel --prod",
+    "serve": "npx http-server . -p 8000 -o",
+    "lint:html": "npx htmlhint *.html",
+    "lint:css": "npx stylelint styles/*.css",
+    "lint:js": "npx eslint scripts/*.js",
+    "optimize": "npx imagemin assets/* --out-dir=assets/optimized",
+    "stats": "npx bundlesize"
+  },
+  "keywords": [
+    "navigation",
+    "static-site",
+    "bookmark-manager",
+    "responsive",
+    "vanilla-javascript",
+    "css-grid",
+    "search",
+    "dashboard"
+  ],
+  "author": {
+    "name": "q877220",
+    "email": "dev@example.com",
+    "url": "https://github.com/q877220"
+  },
+  "license": "MIT",
+  "homepage": "https://q877220.github.io/repo-078",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/q877220/repo-078.git"
+  },
+  "bugs": {
+    "url": "https://github.com/q877220/repo-078/issues"
+  },
+  "devDependencies": {
+    "htmlhint": "^1.1.4",
+    "stylelint": "^15.10.3",
+    "eslint": "^8.45.0",
+    "imagemin": "^8.0.1",
+    "imagemin-cli": "^7.0.0",
+    "bundlesize": "^0.18.1",
+    "http-server": "^14.1.1",
+    "netlify-cli": "^15.8.0",
+    "vercel": "^31.2.3"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "not dead"
+  ],
+  "bundlesize": [
+    {
+      "path": "styles/*.css",
+      "maxSize": "20 kB"
+    },
+    {
+      "path": "scripts/*.js",
+      "maxSize": "15 kB"
+    }
+  ],
+  "config": {
+    "port": 8000,
+    "host": "localhost"
+  }
+}
